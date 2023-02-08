@@ -13,6 +13,7 @@ const TESTS: &[&str] = &[
     "ch3b_yield1\0",
     "ch3b_yield2\0",
     "ch4b_sbrk\0",
+    "ch5b_exit\0",
     "ch5b_forktest_simple\0",
     "ch5b_forktest\0",
     "ch6b_filetest_simple\0",

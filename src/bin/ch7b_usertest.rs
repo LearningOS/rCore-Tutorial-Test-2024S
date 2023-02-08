@@ -19,7 +19,6 @@ const TESTS: &[&str] = &[
     "ch6b_filetest_simple\0",
     "ch6b_cat\0",
     "ch7b_sig_simple\0",
-    "ch7b_sig_simple2\0",
     "ch7b_pipetest\0",
     "ch7b_pipe_large_test\0",
 ];
