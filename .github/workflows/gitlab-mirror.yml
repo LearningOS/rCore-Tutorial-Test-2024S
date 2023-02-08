@@ -10,10 +10,10 @@ jobs:
     - name: Mirror + trigger CI
       uses: Gallium70/gitlab-mirror-and-ci-action@master
       with:
-        args: "https://git.tsinghua.edu.cn/os-lab/public/rcore-tutorial-test-2022s"
+        args: "https://git.tsinghua.edu.cn/os-lab/public/rcore-tutorial-test-2023s"
       env:
         GITLAB_HOSTNAME: "git.tsinghua.edu.cn"
-        GITLAB_PROJECT_ID: "12007"
-        GITLAB_PROJECT_NAME: "rcore-tutorial-test-2022s"
+        GITLAB_PROJECT_ID: "20755"
+        GITLAB_PROJECT_NAME: "rcore-tutorial-test-2023s"
         GITLAB_PROJECT_TOKEN: ${{secrets.GITLAB_PROJECT_TOKEN}}
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

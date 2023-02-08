@@ -1,4 +1,4 @@
-use crate::TaskInfo;
+use crate::{TaskInfo, SignalAction};
 
 use super::{Stat, TimeVal};
 
@@ -12,6 +12,10 @@ pub const SYSCALL_FSTAT: usize = 80;
 pub const SYSCALL_EXIT: usize = 93;
 pub const SYSCALL_SLEEP: usize = 101;
 pub const SYSCALL_YIELD: usize = 124;
+pub const SYSCALL_KILL: usize = 129;
+pub const SYSCALL_SIGACTION: usize = 134;
+pub const SYSCALL_SIGPROCMASK: usize = 135;
+pub const SYSCALL_SIGRETURN: usize = 139;
 pub const SYSCALL_GETTIMEOFDAY: usize = 169;
 pub const SYSCALL_GETPID: usize = 172;
 pub const SYSCALL_GETTID: usize = 178;
@@ -19,6 +23,7 @@ pub const SYSCALL_FORK: usize = 220;
 pub const SYSCALL_EXEC: usize = 221;
 pub const SYSCALL_WAITPID: usize = 260;
 pub const SYSCALL_SET_PRIORITY: usize = 140;
+pub const SYSCALL_SBRK: usize = 214;
 pub const SYSCALL_MUNMAP: usize = 215;
 pub const SYSCALL_MMAP: usize = 222;
 pub const SYSCALL_SPAWN: usize = 400;
@@ -181,6 +186,10 @@ pub fn sys_set_priority(prio: isize) -> isize {
     syscall(SYSCALL_SET_PRIORITY, [prio as usize, 0, 0])
 }
 
+pub fn sys_sbrk(size: i32) -> isize {
+    syscall(SYSCALL_SBRK, [size as usize, 0, 0])
+}
+
 pub fn sys_mmap(start: usize, len: usize, prot: usize) -> isize {
     syscall(SYSCALL_MMAP, [start, len, prot])
 }
@@ -255,4 +264,31 @@ pub fn sys_condvar_signal(condvar_id: usize) -> isize {
 
 pub fn sys_condvar_wait(condvar_id: usize, mutex_id: usize) -> isize {
     syscall(SYSCALL_CONDVAR_WAIT, [condvar_id, mutex_id, 0])
+}
+
+pub fn sys_sigaction(
+    signum: i32,
+    action: *const SignalAction,
+    old_action: *mut SignalAction,
+) -> isize {
+    syscall(
+        SYSCALL_SIGACTION,
+        [
+            signum as usize,
+            action as usize,
+            old_action as usize,
+        ],
+    )
+}
+
+pub fn sys_sigprocmask(mask: u32) -> isize {
+    syscall(SYSCALL_SIGPROCMASK, [mask as usize, 0, 0])
+}
+
+pub fn sys_sigreturn() -> isize {
+    syscall(SYSCALL_SIGRETURN, [0, 0, 0])
+}
+
+pub fn sys_kill(pid: usize, signal: i32) -> isize {
+    syscall(SYSCALL_KILL, [pid, signal as usize, 0])
 }
