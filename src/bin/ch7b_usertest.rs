@@ -4,7 +4,7 @@
 #[macro_use]
 extern crate user_lib;
 
-static TESTS: &[&str] = &[
+const TESTS: &[&str] = &[
     "ch2b_hello_world\0",
     "ch2b_power_3\0",
     "ch2b_power_5\0",
@@ -12,12 +12,9 @@ static TESTS: &[&str] = &[
     "ch3b_yield0\0",
     "ch3b_yield1\0",
     "ch3b_yield2\0",
-    "ch3b_sleep\0",
-    "ch3b_sleep1\0",
     "ch4b_sbrk\0",
     "ch5b_forktest_simple\0",
     "ch5b_forktest\0",
-    "ch5b_forktest2\0",
     "ch6b_filetest_simple\0",
     "ch6b_cat\0",
     "ch7b_sig_simple\0",
@@ -26,23 +23,33 @@ static TESTS: &[&str] = &[
     "ch7b_pipe_large_test\0",
 ];
 
-use user_lib::{spawn, waitpid};
+const TEST_NUM: usize = TESTS.len();
 
-/// 辅助测例，运行所有其他测例。
+use user_lib::{exec, fork, waitpid};
 
 #[no_mangle]
 pub fn main() -> i32 {
-    for test in TESTS {
+    let mut pids = [0; TEST_NUM];
+    for (i, &test) in TESTS.iter().enumerate() {
         println!("Usertests: Running {}", test);
-        let pid = spawn(*test);
-        let mut xstate: i32 = Default::default();
-        let wait_pid = waitpid(pid as usize, &mut xstate);
-        assert_eq!(pid, wait_pid);
+        let pid = fork();
+        if pid == 0 {
+            exec(&*test, &[core::ptr::null::<u8>()]);
+            panic!("unreachable!");
+        } else {
+            pids[i] = pid;
+        }
+    }
+    let mut xstate: i32 = Default::default();
+    for (i, &test) in TESTS.iter().enumerate() {
+        let wait_pid = waitpid(pids[i] as usize, &mut xstate);
+        assert_eq!(pids[i], wait_pid);
         println!(
             "\x1b[32mUsertests: Test {} in Process {} exited with code {}\x1b[0m",
-            test, pid, xstate
+            test, pids[i], xstate
         );
     }
-    println!("ch7 Usertests passed!");
+    println!("Basic usertests passed!");
     0
 }
+

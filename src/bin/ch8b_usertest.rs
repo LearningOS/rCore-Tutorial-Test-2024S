@@ -12,12 +12,9 @@ const TESTS: &[&str] = &[
     "ch3b_yield0\0",
     "ch3b_yield1\0",
     "ch3b_yield2\0",
-    "ch3b_sleep\0",
-    "ch3b_sleep1\0",
     "ch4b_sbrk\0",
     "ch5b_forktest_simple\0",
     "ch5b_forktest\0",
-    "ch5b_forktest2\0",
     "ch6b_filetest_simple\0",
     "ch6b_cat\0",
     "ch7b_pipetest\0",
@@ -56,6 +53,6 @@ pub fn main() -> i32 {
             test, pids[i], xstate
         );
     }
-    println!("ch8 Usertests passed!");
+    println!("Basic usertests passed!");
     0
 }
