@@ -48,7 +48,7 @@ $ rm -rf ci-user
 $ git clone https://github.com/LearningOS/rCore-Tutorial-Checker-2023S.git ci-user
 $ git clone https://github.com/LearningOS/rCore-Tutorial-Test-2023S.git ci-user/user
 $ git checkout ch$ID
-# check&grading OS in ch$ID with more tests
+# check&grade OS in ch$ID with more tests
 $ cd ci-user && make test CHAPTER=$ID
 ```
 Notice: $ID is from [3,4,5,6,8]
