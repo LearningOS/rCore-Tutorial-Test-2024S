@@ -12,8 +12,8 @@ static TESTS: &[&str] = &[
     "ch3b_yield0\0",
     "ch3b_yield1\0",
     "ch3b_yield2\0",
-    "ch3b_sleep\0",
-    "ch3b_sleep1\0",
+    "ch3_sleep\0",
+    "ch3_sleep1\0",
     "ch4_mmap0\0",
     "ch4_mmap1\0",
     "ch4_mmap2\0",
@@ -41,11 +41,11 @@ pub fn main() -> i32 {
     let mut xstate: i32 = Default::default();
     for (i, &test) in TESTS.iter().enumerate() {
         let wait_pid = waitpid(pid[i] as usize, &mut xstate);
-        assert_eq!(pid[i], wait_pid);
         println!(
             "\x1b[32mUsertests: Test {} in Process {} exited with code {}\x1b[0m",
             test, pid[i], xstate
         );
+        assert_eq!(pid[i], wait_pid);
     }
     println!("Usertests: Running {}", STEST);
     let spid = spawn(STEST);
