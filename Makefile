@@ -7,6 +7,10 @@ OBJDUMP := rust-objdump --arch-name=riscv64
 OBJCOPY := rust-objcopy --binary-architecture=riscv64
 PY := python3
 
+ifeq ($(MODE), release)
+	MODE_ARG := --release
+endif
+
 BASE ?= 0
 CHAPTER ?= 0
 TEST ?= $(CHAPTER)
@@ -31,7 +35,7 @@ ELFS := $(patsubst $(APP_DIR)/%.rs, $(TARGET_DIR)/%, $(APPS))
 binary:
 	@echo $(ELFS)
 	@if [ ${CHAPTER} -gt 3 ]; then \
-		cargo build --release ;\
+		cargo build $(MODE_ARG) ;\
 	else \
 		CHAPTER=$(CHAPTER) python3 build.py ;\
 	fi
