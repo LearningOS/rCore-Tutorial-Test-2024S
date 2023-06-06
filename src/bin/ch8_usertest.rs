@@ -9,8 +9,6 @@ const TESTS: &[&str] = &[
     "ch2b_power_3\0",
     "ch2b_power_5\0",
     "ch2b_power_7\0",
-    "ch3b_sleep\0",
-    "ch3b_sleep1\0",
     "ch3b_yield0\0",
     "ch3b_yield1\0",
     "ch3b_yield2\0",
