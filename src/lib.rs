@@ -203,7 +203,7 @@ pub fn unlink(path: &str) -> isize {
     sys_unlinkat(AT_FDCWD as usize, path, 0)
 }
 
-pub fn fstat(fd: usize, st: &Stat) -> isize {
+pub fn fstat(fd: usize, st: &mut Stat) -> isize {
     sys_fstat(fd, st)
 }
 
@@ -307,7 +307,7 @@ pub fn pipe(pipe_fd: &mut [usize]) -> isize {
     sys_pipe(pipe_fd)
 }
 
-pub fn task_info(info: &TaskInfo) -> isize {
+pub fn task_info(info: &mut TaskInfo) -> isize {
     sys_task_info(info)
 }
 

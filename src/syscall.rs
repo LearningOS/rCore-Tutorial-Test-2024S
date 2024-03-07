@@ -128,7 +128,7 @@ pub fn sys_unlinkat(dirfd: usize, path: &str, flags: usize) -> isize {
     syscall(SYSCALL_UNLINKAT, [dirfd, path.as_ptr() as usize, flags])
 }
 
-pub fn sys_fstat(fd: usize, st: &Stat) -> isize {
+pub fn sys_fstat(fd: usize, st: &mut Stat) -> isize {
     syscall(SYSCALL_FSTAT, [fd, st as *const _ as usize, 0])
 }
 
@@ -210,7 +210,7 @@ pub fn sys_pipe(pipe: &mut [usize]) -> isize {
     syscall(SYSCALL_PIPE, [pipe.as_mut_ptr() as usize, 0, 0])
 }
 
-pub fn sys_task_info(info: &TaskInfo) -> isize {
+pub fn sys_task_info(info: &mut TaskInfo) -> isize {
     syscall(SYSCALL_TASK_INFO, [info as *const _ as usize, 0, 0])
 }
 

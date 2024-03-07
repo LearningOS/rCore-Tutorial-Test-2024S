@@ -13,8 +13,8 @@ pub fn main() -> i32 {
     let fd = open(fname, OpenFlags::CREATE | OpenFlags::WRONLY);
     assert!(fd > 0);
     let fd = fd as usize;
-    let stat: Stat = Stat::new();
-    let ret = fstat(fd, &stat);
+    let mut stat: Stat = Stat::new();
+    let ret = fstat(fd, &mut stat);
     assert_eq!(ret, 0);
     assert_eq!(stat.mode, StatMode::FILE);
     assert_eq!(stat.nlink, 1);
